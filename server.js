@@ -22,13 +22,13 @@ const PORT = 3000;
 // 1. Ve a https://console.cloud.google.com
 // 2. Crea un proyecto → habilita "Google Photos Library API"
 // 3. Credenciales → OAuth 2.0 → Tipo: Aplicación web
-// 4. URI de redireccionamiento: http://localhost:3000/auth/callback
+// 4. URL de redireccionamiento: http://localhost:3000/auth/callback
 const CLIENT_ID     = process.env.GOOGLE_CLIENT_ID;
 const CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
-const REDIRECT_URI  = process.env.REDIRECT_URI;
+const REDIRECT_URL  = process.env.REDIRECT_URL; 'https://fotos-abuela-production.up.railway.app/auth/callback';
 // ───────────────────────────────────────────────────────────────────────────
 
-const oauth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
+const oauth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL);
 
 // Estado en memoria (para uso personal/local)
 let sessionTokens  = null;   // tokens de la abuela
