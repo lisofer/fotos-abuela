@@ -23,9 +23,9 @@ const PORT = 3000;
 // 2. Crea un proyecto → habilita "Google Photos Library API"
 // 3. Credenciales → OAuth 2.0 → Tipo: Aplicación web
 // 4. URI de redireccionamiento: http://localhost:3000/auth/callback
-const CLIENT_ID     = 'TU_CLIENT_ID.apps.googleusercontent.com';
-const CLIENT_SECRET = 'TU_CLIENT_SECRET';
-const REDIRECT_URI  = `http://localhost:${PORT}/auth/callback`;
+const CLIENT_ID     = process.env.GOOGLE_CLIENT_ID;
+const CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
+const REDIRECT_URI  = process.env.REDIRECT_URI;
 // ───────────────────────────────────────────────────────────────────────────
 
 const oauth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
