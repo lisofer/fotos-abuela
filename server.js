@@ -24,7 +24,7 @@ const PORT = 3000;
 // 3. Credenciales → OAuth 2.0 → Tipo: Aplicación web
 // 4. URL de redireccionamiento: http://localhost:3000/auth/callback
 const CLIENT_ID     = process.env.GOOGLE_CLIENT_ID;
-const CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;}
+const CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 const REDIRECT_URL = process.env.REDIRECT_URL || 'https://fotos-abuela-production.up.railway.app/auth/callback';// ───────────────────────────────────────────────────────────────────────────
 
 const oauth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL);
