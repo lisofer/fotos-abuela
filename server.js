@@ -46,16 +46,22 @@ function getLocalIP() {
 async function fetchAllPhotos(auth) {
   const items = [];
   let pageToken = null;
-  const base = 'https://photoslibrary.googleapis.com/v1/mediaItems';
+  const base = 'https://www.googleapis.com/drive/v3/files';
 
   do {
-    const url = base + `?pageSize=100${pageToken ? '&pageToken=' + pageToken : ''}`;
-    const res = await fetch(url, {
+    const params = new URLSearchParams({
+      pageSize: '100',
+      q: "mimeType contains 'image/' or mimeType contains 'video/'",
+      fields: 'nextPageToken,files(id,name,mimeType,createdTime,imageMediaMetadata)',
+      ...(pageToken && { pageToken })
+    });
+
+    const res = await fetch(`${base}?${params}`, {
       headers: { Authorization: `Bearer ${auth.credentials.access_token}` }
     });
     const data = await res.json();
     if (data.error) throw new Error(data.error.message);
-    if (data.mediaItems) items.push(...data.mediaItems);
+    if (data.files) items.push(...data.files);
     pageToken = data.nextPageToken || null;
   } while (pageToken);
 
@@ -88,7 +94,7 @@ app.get('/auth', (req, res) => {
   const url = oauth2Client.generateAuthUrl({
     access_type: 'offline',
     scope: [
-      'https://www.googleapis.com/auth/photoslibrary.readonly',
+      'https://www.googleapis.com/auth/drive.readonly',
       'https://www.googleapis.com/auth/userinfo.email',
     ],
     prompt: 'consent',
@@ -165,17 +171,13 @@ app.get('/api/photos', async (req, res) => {
     syncing: lastSync === null,
     lastSync: lastSync?.toISOString(),
     photos: slice.map(item => ({
-      id:       item.id,
-      filename: item.filename,
-      date:     item.mediaMetadata?.creationTime,
-      width:    item.mediaMetadata?.width,
-      height:   item.mediaMetadata?.height,
-      isVideo:  item.mimeType?.startsWith('video'),
-      // =w400-h400-c → thumbnail cuadrado 400px
-      thumb:    item.baseUrl + '=w400-h400-c',
-      // =d → descarga original
-      full:     item.baseUrl + '=d',
-    }))
+  id:       item.id,
+  filename: item.name,
+  date:     item.createdTime,
+  isVideo:  item.mimeType?.startsWith('video'),
+  thumb:    `https://drive.google.com/thumbnail?id=${item.id}&sz=w400`,
+  full:     `https://drive.google.com/uc?export=download&id=${item.id}`,
+}))
   });
 });
 
