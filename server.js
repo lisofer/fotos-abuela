@@ -14,7 +14,9 @@ const express  = require('express');
 const { google } = require('googleapis');
 const QRCode   = require('qrcode');
 const http     = require('http');
-
+console.log('CLIENT_ID:', process.env.GOOGLE_CLIENT_ID ? 'OK' : 'FALTA');
+console.log('CLIENT_SECRET:', process.env.GOOGLE_CLIENT_SECRET ? 'OK' : 'FALTA');
+console.log('REDIRECT_URL:', process.env.REDIRECT_URL ? 'OK' : 'FALTA');
 const app  = express();
 const PORT = 3000;
 
