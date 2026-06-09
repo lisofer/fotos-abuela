@@ -76,8 +76,10 @@ app.get('/', (req, res) => {
 
 // Genera el QR y la URL de autorización que recibirá tu abuela
 app.get('/qr', async (req, res) => {
-  const localIP  = getLocalIP();
-  const authLink = `http://${localIP}:${PORT}/auth`;
+  const localIP = getLocalIP();
+  const authLink = localIP === 'localhost' 
+    ? `http://localhost:${PORT}/auth`
+    : `https://${localIP}/auth`;
   const qrDataURL = await QRCode.toDataURL(authLink, { width: 300, margin: 2 });
   res.send(pageQR(authLink, qrDataURL));
 });
