@@ -416,8 +416,8 @@ http.createServer(app).listen(PORT, () => {
   console.log('\n────────────────────────────────────────');
   console.log('📷  Fotos de Abuela — servidor iniciado');
   console.log('────────────────────────────────────────');
-  console.log(\`🖥  Panel:       http://localhost:\${PORT}\`);
-  console.log(\`📱  QR:          http://localhost:\${PORT}/qr\`);
-  console.log(\`🌐  URL pública: https://\${ip}/auth\`);
+  console.log('🖥  Panel:       http://localhost:' + PORT);
+  console.log('📱  QR:          http://localhost:' + PORT + '/qr');
+  console.log('🌐  URL pública: https://' + ip + '/auth');
   console.log('────────────────────────────────────────\n');
 });
