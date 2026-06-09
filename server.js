@@ -38,14 +38,9 @@ let lastSync       = null;   // fecha del último sync
 // ─── UTILIDADES ─────────────────────────────────────────────────────────────
 
 // Detecta la IP local para construir la URL del QR
+
 function getLocalIP() {
-  const { networkInterfaces } = require('os');
-  for (const iface of Object.values(networkInterfaces())) {
-    for (const entry of iface) {
-      if (entry.family === 'IPv4' && !entry.internal) return entry.address;
-    }
-  }
-  return 'localhost';
+  return process.env.RAILWAY_PUBLIC_DOMAIN || 'localhost';
 }
 
 // Carga todas las fotos paginando por la API de Google Photos
